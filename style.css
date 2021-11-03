@@ -1,0 +1,19 @@
+body {
+  background-color: #eef9bf;
+}
+
+header {
+  display: flex;
+  margin: 0 auto;
+  justify-content: center;
+  align-items: center;
+
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 56px;
+  line-height: 66px;
+  letter-spacing: -0.004em;
+
+  color: #75b79e;
+}
