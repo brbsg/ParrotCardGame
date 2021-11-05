@@ -17,3 +17,13 @@ header {
 
   color: #75b79e;
 }
+
+main {
+  display: flex;
+}
+.card {
+  height: 50px;
+  width: 50px;
+  border: solid black 1px;
+  background-color: white;
+}
