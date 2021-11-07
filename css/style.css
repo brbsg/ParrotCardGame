@@ -18,12 +18,18 @@ header {
   color: #75b79e;
 }
 
-main {
+.board {
   display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 34px;
+  margin: 0 auto;
+  margin-top: 50px;
+  flex-wrap: wrap;
 }
-.card {
-  height: 50px;
-  width: 50px;
-  border: solid black 1px;
-  background-color: white;
+.board div {
+}
+.board img {
+  width: 117px;
+  height: 146px;
 }
