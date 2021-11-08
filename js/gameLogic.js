@@ -3,7 +3,7 @@ const beginGame = (amountOfCards) => {
   while (amountOfCards % 2 !== 0 || amountOfCards < 4 || amountOfCards > 14) {
     amountOfCards = parseInt(
       prompt(
-        "Para de perder tempo e digita um número certo logo moço.\nNúmero par entre 4 e 14."
+        "Para de perder tempo e digita um número certo logo cara.\nNúmero par entre 4 e 14."
       )
     );
   }
@@ -45,14 +45,17 @@ const spreadCards = () => {
 
     divFront.setAttribute("class", "front");
     divFront.style.backgroundImage = `url(/assets/front.png)`;
+    divFront.setAttribute("data-identifier", "front-face");
 
     divBack.setAttribute("class", "back");
     divBack.style.backgroundImage = `url(${sortedCards[randomIndex]})`;
+    divBack.setAttribute("data-identifier", "back-face");
 
     card.appendChild(divFront);
     card.appendChild(divBack);
     card.setAttribute("class", "card");
     card.setAttribute("onclick", "onClickCard(this)");
+    card.setAttribute("data-identifier", "card");
 
     board.appendChild(card);
     sortedCards.splice(randomIndex, 1);
@@ -61,10 +64,14 @@ const spreadCards = () => {
 
 let currentFlippedCards = [];
 let pairedCards = 0;
+let rounds = 0;
 const onClickCard = (element) => {
+  rounds++;
+
   if (element.style.transform === "rotateY(180deg)") {
     return;
   }
+
   if (currentFlippedCards.length < 2) {
     currentFlippedCards.push(element);
     element.style.transform = "rotateY(180deg)";
@@ -75,7 +82,7 @@ const onClickCard = (element) => {
         pairedCards++;
 
         if (pairedCards * 2 >= amountOfCards) {
-          console.log("ganhou");
+          setTimeout(() => alert(`Você ganhou em ${rounds} jogadas!`), 100);
         }
       } else {
         currentFlippedCards.map((e) => {
@@ -83,7 +90,7 @@ const onClickCard = (element) => {
             () => (
               (e.style.transform = "rotateY(0deg)"), (currentFlippedCards = [])
             ),
-            750
+            1000
           );
         });
       }

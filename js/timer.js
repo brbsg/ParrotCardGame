@@ -1,0 +1,3 @@
+const renderClock = () => {
+  alert("barbie");
+};

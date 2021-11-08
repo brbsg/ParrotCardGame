@@ -3,3 +3,5 @@ let amountOfCards = prompt(
 );
 
 beginGame(amountOfCards);
+
+renderClock();
