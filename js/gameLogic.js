@@ -1,17 +1,39 @@
+let currentFlippedCards = [];
+let pairedCards = 0;
+let rounds = 0;
+
 const beginGame = (amountOfCards) => {
   var amountOfCards = amountOfCards;
-  while (amountOfCards % 2 !== 0 || amountOfCards < 4 || amountOfCards > 14) {
-    amountOfCards = parseInt(
-      prompt(
-        "Para de perder tempo e digita um número certo logo cara.\nNúmero par entre 4 e 14."
-      )
-    );
-  }
+
+  incrementTimer();
+
   let board = document.querySelector(".board");
-  board.style.width = (amountOfCards * (117 + 34)) / 2 + "px";
+  board.style.maxWidth = (amountOfCards * (117 + 34)) / 2 + "px";
 
   spreadCards();
 };
+
+const resetGame = () => {
+  let askReset = prompt("Deseja reiniciar o jogo?(digite 'sim')");
+  while (askReset !== "sim") {
+    askReset = prompt("Para reiniciar o jogo, digite a palavra 'sim'.");
+  }
+
+  let board = document.querySelector(".board");
+
+  currentFlippedCards = [];
+  pairedCards = 0;
+  rounds = 0;
+  seconds = 0;
+
+  board.innerHTML = "";
+  amountOfCards = prompt(
+    "Digite a quantidade de cartas.\nNúmero par entre 4 e 14."
+  );
+
+  beginGame(amountOfCards);
+};
+
 const spreadCards = () => {
   let sortedCards = [];
 
@@ -62,9 +84,6 @@ const spreadCards = () => {
   }
 };
 
-let currentFlippedCards = [];
-let pairedCards = 0;
-let rounds = 0;
 const onClickCard = (element) => {
   rounds++;
 
@@ -82,7 +101,15 @@ const onClickCard = (element) => {
         pairedCards++;
 
         if (pairedCards * 2 >= amountOfCards) {
-          setTimeout(() => alert(`Você ganhou em ${rounds} jogadas!`), 100);
+          endStopwatch(); // porque o tempo continua contando mesmo depois de parar
+          setTimeout(
+            () =>
+              alert(
+                `Você ganhou em ${rounds} jogadas e em ${seconds} segundos!`
+              ),
+            100
+          );
+          setTimeout(resetGame, 1000);
         }
       } else {
         currentFlippedCards.map((e) => {
