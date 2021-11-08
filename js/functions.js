@@ -1,8 +1,5 @@
-const beginGame = () => {
-  let amountOfCards = prompt(
-    "Digite a quantidade de cartas.\nNúmero par entre 4 e 14."
-  );
-
+const beginGame = (amountOfCards) => {
+  var amountOfCards = amountOfCards;
   while (amountOfCards % 2 !== 0 || amountOfCards < 4 || amountOfCards > 14) {
     amountOfCards = parseInt(
       prompt(
@@ -10,14 +7,12 @@ const beginGame = () => {
       )
     );
   }
-
   let board = document.querySelector(".board");
   board.style.width = (amountOfCards * (117 + 34)) / 2 + "px";
 
-  spreadCards(amountOfCards);
+  spreadCards();
 };
-
-const spreadCards = (amountOfCards) => {
+const spreadCards = () => {
   let sortedCards = [];
 
   const imgArr = [
@@ -42,15 +37,67 @@ const spreadCards = (amountOfCards) => {
 
   while (sortedCards.length !== 0) {
     let card = document.createElement("div");
-    let img = document.createElement("img");
+    let divFront = document.createElement("div");
+    let divBack = document.createElement("div");
     let board = document.querySelector(".board");
 
     let randomIndex = Math.floor(sortedCards.length * Math.random());
 
-    img.setAttribute("src", sortedCards[randomIndex]);
-    card.appendChild(img);
+    divFront.setAttribute("class", "front");
+    divFront.style.backgroundImage = `url(/assets/front.png)`;
+
+    divBack.setAttribute("class", "back");
+    divBack.style.backgroundImage = `url(${sortedCards[randomIndex]})`;
+
+    card.appendChild(divFront);
+    card.appendChild(divBack);
+    card.setAttribute("class", "card");
+    card.setAttribute("onclick", "onClickCard(this)");
 
     board.appendChild(card);
     sortedCards.splice(randomIndex, 1);
   }
+};
+
+let currentFlippedCards = [];
+let pairedCards = 0;
+const onClickCard = (element) => {
+  if (element.style.transform === "rotateY(180deg)") {
+    return;
+  }
+  if (currentFlippedCards.length < 2) {
+    currentFlippedCards.push(element);
+    element.style.transform = "rotateY(180deg)";
+
+    if (currentFlippedCards.length == 2) {
+      if (secondCardFlipped()) {
+        currentFlippedCards = [];
+        pairedCards++;
+
+        if (pairedCards * 2 >= amountOfCards) {
+          console.log("ganhou");
+        }
+      } else {
+        currentFlippedCards.map((e) => {
+          setTimeout(
+            () => (
+              (e.style.transform = "rotateY(0deg)"), (currentFlippedCards = [])
+            ),
+            750
+          );
+        });
+      }
+    }
+  }
+};
+
+const secondCardFlipped = () => {
+  let img1 =
+    currentFlippedCards[0].querySelector(".back").style.backgroundImage; //pega o src da imagem
+  let img2 =
+    currentFlippedCards[1].querySelector(".back").style.backgroundImage;
+
+  if (img1 === img2) {
+    return true;
+  } else return false;
 };

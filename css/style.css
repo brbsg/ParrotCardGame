@@ -1,3 +1,6 @@
+* {
+  box-sizing: border-box;
+}
 body {
   background-color: #eef9bf;
 }
@@ -27,9 +30,48 @@ header {
   margin-top: 50px;
   flex-wrap: wrap;
 }
-.board div {
-}
-.board img {
+
+.board .card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 117px;
   height: 146px;
+
+  background: #a7e9af;
+  border: 1px solid #99cea8;
+  border-radius: 5px;
+
+  background-size: 100px 100px;
+  background-repeat: no-repeat;
+  background-position: center;
+
+  transform-style: preserve-3d;
+  perspective: 100px;
+  transition: all 0.5s;
+}
+.board .front {
+  position: absolute;
+  height: 100px;
+  width: 100px;
+
+  background-size: 100px 100px;
+  background-position: center;
+  backface-visibility: hidden;
+}
+.board .back {
+  position: absolute;
+  height: 100px;
+  width: 100px;
+
+  background-size: 100px 100px;
+  background-position: center;
+  backface-visibility: hidden;
+
+  transform: rotateY(180deg);
+}
+
+.board img {
+  width: 100px;
+  height: 100px;
 }
